@@ -1,0 +1,78 @@
+{
+  "name": "countries-population",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/countries-population/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/countries-population",
+        "compiler": "babel",
+        "main": "apps/countries-population/src/main.ts",
+        "tsConfig": "apps/countries-population/tsconfig.app.json",
+        "webpackConfig": "apps/countries-population/webpack.config.js",
+        "assets": [
+          "apps/countries-population/src/favicon.ico",
+          "apps/countries-population/src/assets"
+        ],
+        "index": "apps/countries-population/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/countries-population/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/countries-population/src/environments/environment.ts",
+              "with": "apps/countries-population/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "countries-population:build",
+        "port": 4400
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "countries-population:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/countries-population/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/countries-population/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

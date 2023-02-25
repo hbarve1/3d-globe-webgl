@@ -1,0 +1,78 @@
+{
+  "name": "airline-routes-highlight-links",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/airline-routes-highlight-links/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/airline-routes-highlight-links",
+        "compiler": "babel",
+        "main": "apps/airline-routes-highlight-links/src/main.ts",
+        "tsConfig": "apps/airline-routes-highlight-links/tsconfig.app.json",
+        "webpackConfig": "apps/airline-routes-highlight-links/webpack.config.js",
+        "assets": [
+          "apps/airline-routes-highlight-links/src/favicon.ico",
+          "apps/airline-routes-highlight-links/src/assets"
+        ],
+        "index": "apps/airline-routes-highlight-links/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/airline-routes-highlight-links/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/airline-routes-highlight-links/src/environments/environment.ts",
+              "with": "apps/airline-routes-highlight-links/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "airline-routes-highlight-links:build",
+        "port": 4300
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "airline-routes-highlight-links:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/airline-routes-highlight-links/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/airline-routes-highlight-links/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "hexed-polygons",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/hexed-polygons/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/hexed-polygons",
+        "compiler": "babel",
+        "main": "apps/hexed-polygons/src/main.ts",
+        "tsConfig": "apps/hexed-polygons/tsconfig.app.json",
+        "webpackConfig": "apps/hexed-polygons/webpack.config.js",
+        "assets": [
+          "apps/hexed-polygons/src/favicon.ico",
+          "apps/hexed-polygons/src/assets"
+        ],
+        "index": "apps/hexed-polygons/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/hexed-polygons/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/hexed-polygons/src/environments/environment.ts",
+              "with": "apps/hexed-polygons/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "hexed-polygons:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "hexed-polygons:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/hexed-polygons/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/hexed-polygons/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

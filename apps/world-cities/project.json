@@ -1,0 +1,77 @@
+{
+  "name": "world-cities",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/world-cities/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/world-cities",
+        "compiler": "babel",
+        "main": "apps/world-cities/src/main.ts",
+        "tsConfig": "apps/world-cities/tsconfig.app.json",
+        "webpackConfig": "apps/world-cities/webpack.config.js",
+        "assets": [
+          "apps/world-cities/src/favicon.ico",
+          "apps/world-cities/src/assets"
+        ],
+        "index": "apps/world-cities/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/world-cities/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/world-cities/src/environments/environment.ts",
+              "with": "apps/world-cities/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "world-cities:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "world-cities:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/world-cities/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/world-cities/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

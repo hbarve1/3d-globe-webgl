@@ -1,0 +1,78 @@
+{
+  "name": "choropleth-countries",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/choropleth-countries/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/choropleth-countries",
+        "compiler": "babel",
+        "main": "apps/choropleth-countries/src/main.ts",
+        "tsConfig": "apps/choropleth-countries/tsconfig.app.json",
+        "webpackConfig": "apps/choropleth-countries/webpack.config.js",
+        "assets": [
+          "apps/choropleth-countries/src/favicon.ico",
+          "apps/choropleth-countries/src/assets"
+        ],
+        "index": "apps/choropleth-countries/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/choropleth-countries/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/choropleth-countries/src/environments/environment.ts",
+              "with": "apps/choropleth-countries/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "choropleth-countries:build",
+        "port": 4400
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "choropleth-countries:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/choropleth-countries/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/choropleth-countries/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

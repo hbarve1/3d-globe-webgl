@@ -1,0 +1,77 @@
+{
+  "name": "random-paths",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/random-paths/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/random-paths",
+        "compiler": "babel",
+        "main": "apps/random-paths/src/main.ts",
+        "tsConfig": "apps/random-paths/tsconfig.app.json",
+        "webpackConfig": "apps/random-paths/webpack.config.js",
+        "assets": [
+          "apps/random-paths/src/favicon.ico",
+          "apps/random-paths/src/assets"
+        ],
+        "index": "apps/random-paths/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/random-paths/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/random-paths/src/environments/environment.ts",
+              "with": "apps/random-paths/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "random-paths:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "random-paths:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/random-paths/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/random-paths/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

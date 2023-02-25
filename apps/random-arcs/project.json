@@ -1,0 +1,78 @@
+{
+  "name": "random-arcs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/random-arcs/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/random-arcs",
+        "compiler": "babel",
+        "main": "apps/random-arcs/src/main.ts",
+        "tsConfig": "apps/random-arcs/tsconfig.app.json",
+        "webpackConfig": "apps/random-arcs/webpack.config.js",
+        "assets": [
+          "apps/random-arcs/src/favicon.ico",
+          "apps/random-arcs/src/assets"
+        ],
+        "index": "apps/random-arcs/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/random-arcs/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/random-arcs/src/environments/environment.ts",
+              "with": "apps/random-arcs/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "random-arcs:build",
+        "port": 4300
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "random-arcs:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/random-arcs/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/random-arcs/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

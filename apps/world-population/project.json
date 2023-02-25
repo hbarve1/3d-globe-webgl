@@ -1,0 +1,77 @@
+{
+  "name": "world-population",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/world-population/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/world-population",
+        "compiler": "babel",
+        "main": "apps/world-population/src/main.ts",
+        "tsConfig": "apps/world-population/tsconfig.app.json",
+        "webpackConfig": "apps/world-population/webpack.config.js",
+        "assets": [
+          "apps/world-population/src/favicon.ico",
+          "apps/world-population/src/assets"
+        ],
+        "index": "apps/world-population/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/world-population/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/world-population/src/environments/environment.ts",
+              "with": "apps/world-population/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "world-population:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "world-population:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/world-population/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/world-population/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

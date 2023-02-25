@@ -1,0 +1,77 @@
+{
+  "name": "html-markers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/html-markers/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/html-markers",
+        "compiler": "babel",
+        "main": "apps/html-markers/src/main.ts",
+        "tsConfig": "apps/html-markers/tsconfig.app.json",
+        "webpackConfig": "apps/html-markers/webpack.config.js",
+        "assets": [
+          "apps/html-markers/src/favicon.ico",
+          "apps/html-markers/src/assets"
+        ],
+        "index": "apps/html-markers/src/index.html",
+        "baseHref": "/",
+        "styles": ["apps/html-markers/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/html-markers/src/environments/environment.ts",
+              "with": "apps/html-markers/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "html-markers:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "html-markers:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/html-markers/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/html-markers/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}
